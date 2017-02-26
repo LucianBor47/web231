@@ -18,6 +18,9 @@
                 input {
                     text-align: right;
                 }
+                #error {
+                    color: red;
+                }
             </style>
     </head>
     
@@ -27,12 +30,30 @@
         <h3>Lucian Bor</h3>
         <h3>This is an arrival calculator.</h3>
         <p>Enter in the distance and speed in numeric digits.</p>
-        <form id='num' action='./arrival.php' method='get'>
-            <input type='text' name='distance' placeholder='Distance'>
-            <input type='text' name='speed' placeholder='Speed'>
-            <input type='submit'>
+        <div id='error'></div>
+        <form id='num' action='arrival.php' method='get'>
+            <label for='distance'>Distance in miles.</label>
+            <input type='text' name='distance' id='distance' placeholder='Distance'><br>
+            <label for='speed'>Speed in miles per hour.</label>
+            <input type='text' name='speed' id='speed' placeholder='Speed'><br>
+            <input type='submit' onClick='return send()'>
         </form>
         <?php echo "<p>This text was written using PHP.</p>" ?>
     </div>
+    <script type='text/javascript'>
+       var err = document.getElementById('error');
+        var form = document.getElementById('num');
+        function send() {
+            var distance = document.getElementById('distance').value;
+            var speed = document.getElementById('speed').value;
+            if (isNaN(parseFloat(speed)) || isNaN(parseFloat(distance))) {
+                err.innerHTML = "<p>Please enter a numeric number.</p>";
+                return false;
+            } else {
+                return true;
+            };
+        };
+        
+    </script >
 </body>
 </html>
