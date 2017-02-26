@@ -14,7 +14,9 @@
                     text-align: center; 
                     background: gray;
                     font-family: Helvetica;
-
+                }
+                input {
+                    text-align: right;
                 }
             </style>
     </head>
@@ -23,12 +25,14 @@
     <div>
         <h1>Seminar 2 Lab 3</h1>
         <h3>Lucian Bor</h3>
-        <form id='num'>
-            <input type='text'>
+        <h3>This is an arrival calculator.</h3>
+        <p>Enter in the distance and speed in numeric digits.</p>
+        <form id='num' action='/arrival.php' method='get'>
+            <input type='text' name='distance' placeholder='Distance'>
+            <input type='text' name='speed' placeholder='Speed'>
             <input type='submit'>
         </form>
-        <p></p>
-        <?php echo "This text was written using PHP." ?>
+        <?php echo "<p>This text was written using PHP.</p>" ?>
     </div>
 </body>
 </html>
