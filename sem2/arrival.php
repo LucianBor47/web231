@@ -39,7 +39,8 @@
     </div> 
     <div>
     <p>The amount of time it will take you to travel <?php echo $distance ?> miles at <?php echo $speed ?> miles per hour is:</p>
-        <p><?php echo round($time,2) ?> hours</p>
+        <p><?php echo round($time,2)." rounded to two decimals."?> hours</p>
+        <p><?php echo round($time,3)." rounded to three decimals."?> hours</p>
     </div>
 </body>
 </html>
