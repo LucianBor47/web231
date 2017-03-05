@@ -4,6 +4,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>View My Blog</title>
+        <link rel='stylesheet' href='/web231/style/main.css'>
 </head>
 <body>
 <h1>My Blog</h1>
@@ -11,28 +12,28 @@
 /* This script retrieves blog entries from the database. */
 
 // Connect and select:
-$dbc = mysql_connect('localhost', 'username', 'password');
-mysql_select_db('myblog', $dbc);
+$dbc = mysqli_connect('localhost', 'testUser', 'TestPass!2');
+mysqli_select_db($dbc, 'myblog');
 	
 // Define the query:
 $query = 'SELECT * FROM entries ORDER BY date_entered DESC';
 	
-if ($r = mysql_query($query, $dbc)) { // Run the query.
+if ($r = mysqli_query($dbc, $query)) { // Run the query.
 
 	// Retrieve and print every record:
-	while ($row = mysql_fetch_array($r)) {
+	while ($row = mysqli_fetch_array($r)) {
 		print "<p><h3>{$row['title']}</h3>
 		{$row['entry']}<br />
-		<a href=\"edit_entry.php?id={$row['entry_id']}\">Edit</a>
-		<a href=\"delete_entry.php?id={$row['entry_id']}\">Delete</a>
+		<a class='links' href=\"edit_entry.php?id={$row['entry_id']}\">Edit</a>
+		<a class='links' href=\"delete_entry.php?id={$row['entry_id']}\">Delete</a>
 		</p><hr />\n";
 	}
 
 } else { // Query didn't run.
-	print '<p style="color: red;">Could not retrieve the data because:<br />' . mysql_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
+	print '<p style="color: red;">Could not retrieve the data because:<br />' . mysqli_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
 } // End of query IF.
 
-mysql_close($dbc); // Close the connection.
+mysqli_close($dbc); // Close the connection.
 
 ?>
 </body>

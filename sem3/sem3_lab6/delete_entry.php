@@ -4,6 +4,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Delete a Blog Entry</title>
+        <link rel='stylesheet' href='/web231/style/main.css'>
 </head>
 <body>
 <h1>Delete an Entry</h1>
@@ -11,20 +12,20 @@
 /* This script deletes a blog entry. */
 
 // Connect and select:
-$dbc = mysql_connect('localhost', 'username', 'password');
-mysql_select_db('myblog', $dbc);
+$dbc = mysqli_connect('localhost', 'testUser', 'TestPass!2');
+mysqli_select_db($dbc, 'myblog');
 	
 if (isset($_GET['id']) && is_numeric($_GET['id']) ) { // Display the entry in a form:
 
 	// Define the query:
 	$query = "SELECT title, entry FROM entries WHERE entry_id={$_GET['id']}";
-	if ($r = mysql_query($query, $dbc)) { // Run the query.
+	if ($r = mysqli_query($dbc, $query)) { // Run the query.
 	
-		$row = mysql_fetch_array($r); // Retrieve the information.
+		$row = mysqli_fetch_array($r); // Retrieve the information.
 
 		// Make the form:
 		print '<form action="delete_entry.php" method="post">
-		<p>Are you sure you want to delete this entry?</p>
+		<p>Are you sure you want to delete this entry? If not click <a href="index.php">here</a>.</p>
 		<p><h3>' . $row['title'] . '</h3>' .
 		$row['entry'] . '<br />
 		<input type="hidden" name="id" value="' . $_GET['id'] . '" />
@@ -32,27 +33,27 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) ) { // Display the entry in a 
 		</form>';
 
 	} else { // Couldn't get the information.
-		print '<p style="color: red;">Could not retrieve the blog entry because:<br />' . mysql_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
+		print '<p style="color: red;">Could not retrieve the blog entry because:<br />' . mysqli_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
 	}
 
 } elseif (isset($_POST['id']) && is_numeric($_POST['id'])) { // Handle the form.
 	
 	// Define the query:
 	$query = "DELETE FROM entries WHERE entry_id={$_POST['id']} LIMIT 1";
-	$r = mysql_query($query, $dbc); // Execute the query.
+	$r = mysqli_query($dbc, $query); // Execute the query.
 	
 	// Report on the result:
-	if (mysql_affected_rows($dbc) == 1) {
+	if (mysqli_affected_rows($dbc) == 1) {
 		print '<p>The blog entry has been deleted.</p>';
 	} else {
-		print '<p style="color: red;">Could not delete the blog entry because:<br />' . mysql_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
+		print '<p style="color: red;">Could not delete the blog entry because:<br />' . mysqli_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
 	}
 
 } else { // No ID received.
 	print '<p style="color: red;">This page has been accessed in error.</p>';
 } // End of main IF.
 
-mysql_close($dbc); // Close the connection.
+mysqli_close($dbc); // Close the connection.
 
 ?>
 </body>

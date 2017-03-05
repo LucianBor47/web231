@@ -10,17 +10,17 @@
 /* This script connects to the MySQL server, selects the database, and creates a table. */
 
 // Connect and select:
-if ($dbc = @mysql_connect('localhost', 'username', 'password')) {
+if ($dbc = @mysqli_connect('localhost', 'testUser', 'TestPass!2')) {
 	
 	// Handle the error if the database couldn't be selected:
-	if (!@mysql_select_db('myblog', $dbc)) {
-		print '<p style="color: red;">Could not select the database because:<br />' . mysql_error($dbc) . '.</p>';
-		mysql_close($dbc);
+	if (!@mysqli_select_db($dbc, 'myblog')) {
+		print '<p style="color: red;">Could not select the database because:<br />' . mysqli_error($dbc) . '.</p>';
+		mysqli_close($dbc);
 		$dbc = FALSE;
 	}
 
 } else { // Connection failure.
-	print '<p style="color: red;">Could not connect to MySQL:<br />' . mysql_error() . '.</p>';
+	print '<p style="color: red;">Could not connect to MySQL:<br />' . mysqli_error() . '.</p>';
 }
 
 if ($dbc) {
@@ -34,13 +34,13 @@ date_entered DATETIME NOT NULL
 )';
 	
 	// Execute the query:
-	if (@mysql_query($query, $dbc)) {
+	if (@mysqli_query($dbc, $query)) {
 		print '<p>The table has been created!</p>';
 	} else {
-		print '<p style="color: red;">Could not create the table because:<br />' . mysql_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
+		print '<p style="color: red;">Could not create the table because:<br />' . mysqli_error($dbc) . '.</p><p>The query being run was: ' . $query . '</p>';
 	}
 		
-	mysql_close($dbc); // Close the connection.
+	mysqli_close($dbc); // Close the connection.
 
 }
 ?>
